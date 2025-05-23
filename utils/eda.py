@@ -71,19 +71,19 @@ def run_eda(df, target_column):
                              color_continuous_scale='Viridis')
             st.plotly_chart(fig)
 
-    # 🔁 All pairwise scatter plots
-    st.write("### 🔁 All Pairwise Scatter Plots (Numeric Features)")
-    max_pairs = 10  # prevent overload
+    # 🔁 All 2D Scatter Plots Between Numeric Features (Including Target)
+    st.write("### 📌 All 2D Scatter Plots Between Numeric Features")
+    max_pairs = 20  # Adjust to control rendering load
     pair_count = 0
     for i in range(len(numeric_cols)):
-        for j in range(i+1, len(numeric_cols)):
+        for j in range(i + 1, len(numeric_cols)):
             if pair_count >= max_pairs:
-                st.info(f"Only showing first {max_pairs} scatter pairs to avoid overload.")
+                st.info(f"Only showing first {max_pairs} scatter pairs to prevent overload.")
                 break
             x_col = numeric_cols[i]
             y_col = numeric_cols[j]
             fig = px.scatter(df, x=x_col, y=y_col,
-                             color=target_column if df[target_column].nunique() <= 10 else None,
+                             color=target_column if df[target_column].nunique() <= 10 and target_column in df.columns else None,
                              title=f"Scatter Plot: {x_col} vs {y_col}",
                              color_continuous_scale='Viridis')
             st.plotly_chart(fig)
@@ -102,12 +102,4 @@ def run_eda(df, target_column):
     st.write("### 🌊 Density Plots (KDE Style)")
     for col in numeric_cols:
         fig = px.density_contour(df, x=col, title=f"Density Contour of {col}")
-        st.plotly_chart(fig)
-
-    # 🌐 3D Scatter Plot (if enough features)
-    if len(numeric_cols) >= 3:
-        st.write("### 🌐 3D Scatter Plot")
-        fig = px.scatter_3d(df, x=numeric_cols[0], y=numeric_cols[1], z=numeric_cols[2],
-                            color=target_column if df[target_column].nunique() <= 10 else None,
-                            title="3D Scatter Plot")
         st.plotly_chart(fig)
