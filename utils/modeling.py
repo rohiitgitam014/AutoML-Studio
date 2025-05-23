@@ -44,13 +44,13 @@ def run_models(X, y, task_type):
         y_pred = model.predict(X_test)
 
         if task_type == "classification":
-            st.text("Classification Report:")
+            st.text("**Classification Report**:")
             report = classification_report(y_test, y_pred, output_dict= True)
             report = pd.DataFrame(report).transform()
             st.table(report)
         else:
             st.write(f"**R2 Score:** {r2_score(y_test, y_pred):.2f}")
             st.write(f"**RMSE:** {np.sqrt(mean_squared_error(y_test, y_pred)):.2f}")
-            st.write(f"Mean squared error:{mean_squared_error(y_test, y_pred): 2f}")
-            st.write(f"Mean absolute error:{mean_absolute_error(y_test, y_pred): 2f}")
+            st.write(f"**Mean squared error**:{mean_squared_error(y_test, y_pred): 2f}")
+            st.write(f"**Mean absolute error**:{mean_absolute_error(y_test, y_pred): 2f}")
 
