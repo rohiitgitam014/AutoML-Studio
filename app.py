@@ -5,7 +5,7 @@ from utils.eda import run_eda
 from utils.modeling import run_models
 
 st.set_page_config(page_title="ML Server", layout="wide")
-st.title("📊 ML Project Server App")
+st.title("📊AutoML Studio")
 
 uploaded_file = st.file_uploader("Upload your CSV dataset", type=["csv"])
 
