@@ -44,7 +44,7 @@ def run_models(X, y, task_type):
         y_pred = model.predict(X_test)
 
         if task_type == "classification":
-            st.text("**Classification Report**:")
+            st.text("Classification Report:".upper())
             report = classification_report(y_test, y_pred, output_dict= True)
             report = pd.DataFrame(report).transform()
             st.table(report)
