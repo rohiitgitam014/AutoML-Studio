@@ -36,13 +36,15 @@ def run_eda(df, target_column):
         fig = px.histogram(df, x=col, nbins=30, title=f"Distribution of {col}", color_discrete_sequence=['teal'])
         st.plotly_chart(fig)
 
-    # Countplots for categorical features
-    st.write("### 📊 Countplots for Categorical Features")
-    cat_cols = df.select_dtypes(include='object').columns.tolist()
-    for col in cat_cols:
-        fig = px.histogram(df, x=col, title=f"Countplot of {col}", color=col,
-                           color_discrete_sequence=px.colors.qualitative.Viridis)
-        fig.update_layout(xaxis_tickangle=-45)
-        st.plotly_chart(fig)
+    # ➕ Scatterplots between pairs of numeric features and target
+    st.write("### 📈 Scatterplots with Target Variable")
+    if len(numeric_cols) >= 2:
+        for col in numeric_cols:
+            if col != target_column:
+                fig = px.scatter(df, x=col, y=target_column,
+                                 title=f"Scatterplot: {col} vs {target_column}",
+                                 color=target_column if df[target_column].nunique() <= 10 else None,
+                                 color_continuous_scale='Viridis')
+                st.plotly_chart(fig)
 
 
