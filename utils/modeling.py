@@ -46,7 +46,7 @@ def run_models(X, y, task_type):
         if task_type == "classification":
             st.text("Classification Report:".upper())
             report = classification_report(y_test, y_pred, output_dict= True)
-            report = pd.DataFrame(report).transform()
+            report = pd.DataFrame(report).transpose()
             st.table(report)
         else:
             st.write(f"**R2 Score:** {r2_score(y_test, y_pred):.2f}")
